@@ -91,3 +91,13 @@ juce_add_binary_data(SubbertoneBinaryData
     SOURCES
     LICENSE
 )
+# In CMakeLists.txt, replace the post-build command with:
+
+if(APPLE)
+    add_custom_command(TARGET Subbertone_VST3 POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "$<TARGET_BUNDLE_DIR:Subbertone_VST3>"
+        "$ENV{HOME}/Library/Audio/Plug-Ins/VST3/Subbertone.vst3"
+        COMMENT "Copying VST3 to user plugin folder"
+    )
+endif()
